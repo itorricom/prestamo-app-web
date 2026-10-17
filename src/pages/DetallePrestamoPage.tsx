@@ -20,6 +20,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   Card,
   CardContent,
@@ -249,14 +257,9 @@ export function DetallePrestamoPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-medium text-muted-foreground">Progreso de liquidación</span>
-                <span className="font-bold text-foreground font-mono">{progreso}% completado</span>
+                <span className="font-bold text-foreground font-mono tabular-nums">{progreso}% completado</span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
-                <div
-                  className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
-                  style={{ width: `${progreso}%` }}
-                />
-              </div>
+              <Progress value={progreso} className="w-full" />
             </div>
 
             {prestamo.notas && (
@@ -452,22 +455,19 @@ export function DetallePrestamoPage() {
 
                 <div className="space-y-1.5">
                   <Label htmlFor="metodo_pago">Método de pago</Label>
-                  <select
-                    id="metodo_pago"
+                  <Select
                     value={metodo}
-                    onChange={(e) => setMetodo(e.target.value as MetodoPago)}
-                    className="flex h-9 w-full rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:border-ring focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    onValueChange={(val) => setMetodo((val as MetodoPago) || 'EFECTIVO')}
                   >
-                    <option value="EFECTIVO" className="bg-popover text-popover-foreground">
-                      Efectivo
-                    </option>
-                    <option value="DEPOSITO" className="bg-popover text-popover-foreground">
-                      Depósito bancario
-                    </option>
-                    <option value="TRANSFERENCIA" className="bg-popover text-popover-foreground">
-                      Transferencia / QR
-                    </option>
-                  </select>
+                    <SelectTrigger id="metodo_pago" className="w-full">
+                      <SelectValue placeholder="Método de pago" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="EFECTIVO">Efectivo</SelectItem>
+                      <SelectItem value="DEPOSITO">Depósito bancario</SelectItem>
+                      <SelectItem value="TRANSFERENCIA">Transferencia / QR</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 

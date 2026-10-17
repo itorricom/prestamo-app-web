@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
@@ -24,6 +24,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   Card,
   CardContent,
@@ -439,27 +446,28 @@ export function PrestamosPage() {
                 <Label htmlFor="cliente_id">
                   Cliente <span className="text-destructive">*</span>
                 </Label>
-                <select
-                  id="cliente_id"
-                  {...register('cliente_id')}
-                  defaultValue=""
-                  aria-invalid={!!errors.cliente_id}
-                  className="flex h-9 w-full rounded-lg border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:border-ring focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                >
-                  <option value="" disabled className="bg-popover text-popover-foreground">
-                    Selecciona un cliente…
-                  </option>
-                  {clientes.map((c) => (
-                    <option
-                      key={c.id}
-                      value={c.id}
-                      className="bg-popover text-popover-foreground"
+                <Controller
+                  control={control}
+                  name="cliente_id"
+                  render={({ field }) => (
+                    <Select
+                      value={field.value || null}
+                      onValueChange={(val) => field.onChange(val || '')}
                     >
-                      {c.nombre_completo}{' '}
-                      {c.documento_identidad ? `(CI: ${c.documento_identidad})` : ''}
-                    </option>
-                  ))}
-                </select>
+                      <SelectTrigger id="cliente_id" className="w-full">
+                        <SelectValue placeholder="Selecciona un cliente…" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {clientes.map((c) => (
+                          <SelectItem key={c.id} value={c.id}>
+                            {c.nombre_completo}{' '}
+                            {c.documento_identidad ? `(CI: ${c.documento_identidad})` : ''}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
                 {errors.cliente_id && (
                   <p className="text-xs text-destructive">{errors.cliente_id.message}</p>
                 )}
