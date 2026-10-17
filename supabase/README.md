@@ -7,6 +7,7 @@ Este directorio contiene los scripts SQL y la documentación arquitectónica par
 ## 📁 Archivos Disponibles
 
 - **[`schema.sql`](./schema.sql)**: Script maestro DDL en PostgreSQL con todas las tablas, índices, llaves foráneas, funciones RPC y políticas de seguridad RLS.
+- **[`seed.sql`](./seed.sql)**: Script de datos de prueba (seed) con 3 clientes, 3 préstamos demostrativos (activo al día, con mora y liquidado) y cronogramas de amortización con pagos.
 
 ---
 
