@@ -212,7 +212,7 @@ export function DetallePrestamoPage() {
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Capital Prestado
                 </span>
-                <p className="text-lg font-bold font-mono text-foreground">
+                <p className="text-lg font-bold font-mono tabular-nums text-foreground">
                   {formatMoney(prestamo.monto_prestado)}
                 </p>
               </div>
@@ -221,7 +221,7 @@ export function DetallePrestamoPage() {
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Tasa Mensual
                 </span>
-                <p className="text-lg font-bold font-mono text-foreground">
+                <p className="text-lg font-bold font-mono tabular-nums text-foreground">
                   {prestamo.tasa_interes_mensual}%
                 </p>
               </div>
@@ -230,7 +230,7 @@ export function DetallePrestamoPage() {
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Total a Recaudar
                 </span>
-                <p className="text-lg font-bold font-mono text-foreground">
+                <p className="text-lg font-bold font-mono tabular-nums text-foreground">
                   {formatMoney(totalPagar)}
                 </p>
               </div>
@@ -239,7 +239,7 @@ export function DetallePrestamoPage() {
                 <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Saldo Restante
                 </span>
-                <p className="text-lg font-bold font-mono text-primary">
+                <p className="text-lg font-bold font-mono tabular-nums text-primary">
                   {formatMoney(saldoPendiente)}
                 </p>
               </div>
@@ -354,22 +354,22 @@ export function DetallePrestamoPage() {
                   const estadoEfectivo = calcularEstadoEfectivo(cuota);
                   return (
                     <TableRow key={cuota.id}>
-                      <TableCell className="text-center font-mono font-medium">
+                      <TableCell className="text-center font-mono tabular-nums font-medium">
                         {cuota.numero_cuota}
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground">
                         {formatDate(cuota.fecha_vencimiento)}
                       </TableCell>
-                      <TableCell className="text-right font-bold font-mono text-foreground">
+                      <TableCell className="text-right font-bold font-mono tabular-nums text-foreground">
                         {formatMoney(cuota.monto_cuota)}
                       </TableCell>
-                      <TableCell className="text-right font-mono text-muted-foreground text-xs">
+                      <TableCell className="text-right font-mono tabular-nums text-muted-foreground text-xs">
                         {formatMoney(cuota.monto_capital)}
                       </TableCell>
-                      <TableCell className="text-right font-mono text-muted-foreground text-xs">
+                      <TableCell className="text-right font-mono tabular-nums text-muted-foreground text-xs">
                         {formatMoney(cuota.monto_interes)}
                       </TableCell>
-                      <TableCell className="text-right font-mono text-muted-foreground text-xs">
+                      <TableCell className="text-right font-mono tabular-nums text-muted-foreground text-xs">
                         {formatMoney(cuota.saldo_restante)}
                       </TableCell>
                       <TableCell className="text-center">
@@ -427,6 +427,7 @@ export function DetallePrestamoPage() {
                 <Input
                   id="monto_cobro"
                   type="number"
+                  inputMode="decimal"
                   step="0.01"
                   min="0.01"
                   value={monto}

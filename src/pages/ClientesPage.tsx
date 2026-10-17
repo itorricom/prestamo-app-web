@@ -216,7 +216,7 @@ export function ClientesPage() {
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Buscar por nombre, CI, teléfono o email..."
+              placeholder="Buscar por nombre, CI, teléfono o email…"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="h-9 pl-9"
@@ -284,8 +284,12 @@ export function ClientesPage() {
                     <DropdownMenu>
                       <DropdownMenuTrigger
                         render={
-                          <Button variant="ghost" size="icon-sm">
-                            <MoreVertical className="size-4" />
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            aria-label={`Opciones para ${cliente.nombre_completo}`}
+                          >
+                            <MoreVertical className="size-4" aria-hidden />
                           </Button>
                         }
                       />
@@ -360,7 +364,7 @@ export function ClientesPage() {
                       </TableCell>
                       <TableCell>
                         {cliente.documento_identidad ? (
-                          <Badge variant="outline" className="font-mono text-[11px]">
+                          <Badge variant="outline" className="font-mono tabular-nums text-[11px]">
                             {cliente.documento_identidad}
                           </Badge>
                         ) : (
@@ -369,7 +373,7 @@ export function ClientesPage() {
                       </TableCell>
                       <TableCell>
                         {cliente.telefono ? (
-                          <span className="text-muted-foreground font-mono text-xs">
+                          <span className="text-muted-foreground font-mono tabular-nums text-xs">
                             {cliente.telefono}
                           </span>
                         ) : (
@@ -435,6 +439,7 @@ export function ClientesPage() {
                 <Input
                   id="nombre_completo"
                   placeholder="Ej. Juan Pérez García"
+                  autoComplete="name"
                   aria-invalid={!!errors.nombre_completo}
                   {...register('nombre_completo')}
                 />
@@ -449,6 +454,8 @@ export function ClientesPage() {
                   <Input
                     id="documento_identidad"
                     placeholder="Ej. 8456123"
+                    autoComplete="off"
+                    spellCheck={false}
                     {...register('documento_identidad')}
                   />
                 </div>
@@ -456,6 +463,9 @@ export function ClientesPage() {
                   <Label htmlFor="telefono">Teléfono / Celular</Label>
                   <Input
                     id="telefono"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     placeholder="Ej. 70012345"
                     {...register('telefono')}
                   />
@@ -467,6 +477,8 @@ export function ClientesPage() {
                 <Input
                   id="email"
                   type="email"
+                  autoComplete="email"
+                  spellCheck={false}
                   placeholder="correo@ejemplo.com"
                   aria-invalid={!!errors.email}
                   {...register('email')}
@@ -480,6 +492,7 @@ export function ClientesPage() {
                 <Label htmlFor="direccion">Dirección</Label>
                 <Input
                   id="direccion"
+                  autoComplete="street-address"
                   placeholder="Ej. Av. Principal #123, Zona Central"
                   {...register('direccion')}
                 />

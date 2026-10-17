@@ -210,7 +210,7 @@ export function PrestamosPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">
+              <div className="text-2xl font-bold font-mono tabular-nums text-foreground">
                 {formatMoney(metricas.totalPrestado)}
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
@@ -229,7 +229,7 @@ export function PrestamosPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">{metricas.activos}</div>
+              <div className="text-2xl font-bold font-mono tabular-nums text-foreground">{metricas.activos}</div>
               <p className="mt-1 text-xs text-muted-foreground">
                 Contratos en etapa regular de amortización
               </p>
@@ -246,7 +246,7 @@ export function PrestamosPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">{metricas.pagados}</div>
+              <div className="text-2xl font-bold font-mono tabular-nums text-foreground">{metricas.pagados}</div>
               <p className="mt-1 text-xs text-muted-foreground">
                 Créditos completados satisfactoriamente
               </p>
@@ -259,7 +259,7 @@ export function PrestamosPage() {
           <div className="relative flex-1 sm:max-w-md">
             <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Buscar por cliente o CI..."
+              placeholder="Buscar por cliente o CI…"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="h-9 pl-9"
@@ -388,13 +388,13 @@ export function PrestamosPage() {
                           )}
                         </div>
                       </TableCell>
-                      <TableCell className="text-right font-semibold font-mono text-foreground">
+                      <TableCell className="text-right font-semibold font-mono tabular-nums text-foreground">
                         {formatMoney(prestamo.monto_prestado)}
                       </TableCell>
-                      <TableCell className="text-right text-muted-foreground font-mono">
+                      <TableCell className="text-right text-muted-foreground font-mono tabular-nums">
                         {prestamo.tasa_interes_mensual}%
                       </TableCell>
-                      <TableCell className="text-right text-muted-foreground">
+                      <TableCell className="text-right text-muted-foreground font-mono tabular-nums">
                         {prestamo.plazo_meses} meses
                       </TableCell>
                       <TableCell className="text-muted-foreground text-xs">
@@ -473,6 +473,7 @@ export function PrestamosPage() {
                   <Input
                     id="monto_prestado"
                     type="number"
+                    inputMode="decimal"
                     step="0.01"
                     min="0"
                     placeholder="5000"
@@ -493,6 +494,7 @@ export function PrestamosPage() {
                   <Input
                     id="tasa_interes_mensual"
                     type="number"
+                    inputMode="decimal"
                     step="0.1"
                     min="0"
                     max="100"
@@ -514,6 +516,7 @@ export function PrestamosPage() {
                   <Input
                     id="plazo_meses"
                     type="number"
+                    inputMode="numeric"
                     min="1"
                     max="360"
                     placeholder="12"
