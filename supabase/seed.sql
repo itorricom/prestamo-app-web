@@ -11,8 +11,7 @@
 -- 0. CONFIRMAR USUARIO ADMINISTRADOR DE DEMO
 -- Si creaste el usuario admin@prestamoapp.com, este comando asegura que esté confirmado para login directo:
 UPDATE auth.users
-SET email_confirmed_at = COALESCE(email_confirmed_at, now()),
-    confirmed_at = COALESCE(confirmed_at, now())
+SET email_confirmed_at = COALESCE(email_confirmed_at, now())
 WHERE email = 'admin@prestamoapp.com';
 
 DO $$
@@ -50,7 +49,7 @@ BEGIN
         p_monto_prestado => 5000.00,
         p_tasa_interes_mensual => 2.50,
         p_plazo_meses => 6,
-        p_fecha_inicio => CURRENT_DATE - INTERVAL '2 months',
+        p_fecha_inicio => (CURRENT_DATE - INTERVAL '2 months')::DATE,
         p_notas => 'Crédito para compra de mercadería e inventario de tienda.'
     );
 
@@ -91,7 +90,7 @@ BEGIN
         p_monto_prestado => 12000.00,
         p_tasa_interes_mensual => 2.00,
         p_plazo_meses => 12,
-        p_fecha_inicio => CURRENT_DATE - INTERVAL '3 months',
+        p_fecha_inicio => (CURRENT_DATE - INTERVAL '3 months')::DATE,
         p_notas => 'Financiamiento de maquinaria textil y refacción de taller.'
     );
 
@@ -132,7 +131,7 @@ BEGIN
         p_monto_prestado => 2500.00,
         p_tasa_interes_mensual => 3.00,
         p_plazo_meses => 3,
-        p_fecha_inicio => CURRENT_DATE - INTERVAL '4 months',
+        p_fecha_inicio => (CURRENT_DATE - INTERVAL '4 months')::DATE,
         p_notas => 'Microcrédito de capital de trabajo de ciclo corto.'
     );
 
