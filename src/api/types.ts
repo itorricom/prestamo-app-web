@@ -1,16 +1,16 @@
-export interface LoginRequest {
+export interface IniciarSesionRequest {
   email: string;
   password: string;
 }
 
-export interface User {
+export interface Usuario {
   id: string;
   email: string;
-  role: 'PLATFORM_ADMIN' | 'TENANT_ADMIN' | 'COLLECTOR';
-  tenantId: string | null;
+  role?: string;
+  tenantId?: string | null;
 }
 
 export interface AuthResponse {
   accessToken: string;
-  user: User;
+  user: Usuario;
 }

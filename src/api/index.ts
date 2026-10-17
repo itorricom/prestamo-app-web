@@ -1,3 +1,5 @@
 export * from './types';
 export * from './auth';
-export * from './borrowers';
+export * from './clientes';
+export * from './prestamos';
+export * from './pagos';

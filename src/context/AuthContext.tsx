@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { User } from '../api/types';
+import { supabase } from '../lib/supabase';
+import type { Usuario } from '../api/types';
 
 interface AuthContextType {
-  user: User | null;
+  user: Usuario | null;
   isLoading: boolean;
-  login: (user: User, token: string) => void;
+  login: (user: Usuario, token: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -12,29 +13,52 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Usuario | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Restaurar usuario desde localStorage
-    const savedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('accessToken');
-    if (savedUser && token) {
-      setUser(JSON.parse(savedUser));
-    }
-    setIsLoading(false);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email || '',
+          role: 'ADMIN',
+          tenantId: null,
+        });
+      }
+      setIsLoading(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email || '',
+          role: 'ADMIN',
+          tenantId: null,
+        });
+      } else {
+        setUser(null);
+      }
+      setIsLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const login = (newUser: User, token: string) => {
+  const login = (newUser: Usuario, token: string) => {
     setUser(newUser);
-    localStorage.setItem('user', JSON.stringify(newUser));
     localStorage.setItem('accessToken', token);
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
+    supabase.auth.signOut();
   };
 
   return (

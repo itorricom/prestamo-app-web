@@ -3,16 +3,22 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LoginPage } from './pages/LoginPage';
-import { BorrowersPage } from './pages/BorrowersPage';
-import { LoansPage } from './pages/LoansPage';
-import { LoanDetailPage } from './pages/LoanDetailPage';
+import { ClientesPage } from './pages/ClientesPage';
+import { PrestamosPage } from './pages/PrestamosPage';
+import { DetallePrestamoPage } from './pages/DetallePrestamoPage';
 
 const queryClient = new QueryClient();
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
 
-  if (isLoading) return <div>Cargando...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex min-h-svh items-center justify-center text-slate-500">
+        Cargando…
+      </div>
+    );
+  }
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 }
 
@@ -23,30 +29,37 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route
-        path="/borrowers"
+        path="/clientes"
         element={
           <ProtectedRoute>
-            <BorrowersPage />
+            <ClientesPage />
           </ProtectedRoute>
         }
       />
       <Route
-        path="/loans"
+        path="/prestamos"
         element={
           <ProtectedRoute>
-            <LoansPage />
+            <PrestamosPage />
           </ProtectedRoute>
         }
       />
       <Route
-        path="/loans/:id"
+        path="/prestamos/:id"
         element={
           <ProtectedRoute>
-            <LoanDetailPage />
+            <DetallePrestamoPage />
           </ProtectedRoute>
         }
       />
-      <Route path="/" element={isAuthenticated ? <Navigate to="/loans" /> : <Navigate to="/login" />} />
+      {/* Redirecciones por compatibilidad */}
+      <Route path="/borrowers" element={<Navigate to="/clientes" replace />} />
+      <Route path="/loans" element={<Navigate to="/prestamos" replace />} />
+      
+      <Route
+        path="/"
+        element={isAuthenticated ? <Navigate to="/prestamos" replace /> : <Navigate to="/login" replace />}
+      />
     </Routes>
   );
 }

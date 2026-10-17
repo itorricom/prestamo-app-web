@@ -23,10 +23,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </span>
             </div>
             <nav className="flex items-center gap-1">
-              <NavLink to="/borrowers" className={navLinkClass}>
-                Prestatarios
+              <NavLink to="/clientes" className={navLinkClass}>
+                Clientes
               </NavLink>
-              <NavLink to="/loans" className={navLinkClass}>
+              <NavLink to="/prestamos" className={navLinkClass}>
                 Préstamos
               </NavLink>
             </nav>
@@ -36,7 +36,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <span className="hidden text-sm text-slate-500 lg:block">{user.email}</span>
             )}
             <button
-              onClick={() => { logout(); window.location.href = '/login'; }}
+              onClick={() => {
+                logout();
+                window.location.href = '/login';
+              }}
               className="rounded-lg border border-slate-300 px-3.5 py-1.5 text-sm font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
             >
               Salir
