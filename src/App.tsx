@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { LoginPage } from './pages/LoginPage';
 import { ClientesPage } from './pages/ClientesPage';
 import { PrestamosPage } from './pages/PrestamosPage';
@@ -68,10 +69,12 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Router>
-          <AppRoutes />
-          <Toaster position="top-right" />
-        </Router>
+        <TooltipProvider>
+          <Router>
+            <AppRoutes />
+            <Toaster position="top-right" />
+          </Router>
+        </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
