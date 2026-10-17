@@ -20,7 +20,7 @@ export interface Cuota {
 export interface Prestamo {
   id: string;
   cliente_id: string;
-  cliente?: { nombre_completo: string };
+  cliente?: { nombre_completo: string; documento_identidad?: string | null };
   monto_prestado: string | number;
   tasa_interes_mensual: string | number;
   plazo_meses: number;
@@ -48,7 +48,7 @@ export const prestamosAPI = {
   obtenerTodos: async (): Promise<Prestamo[]> => {
     const { data, error } = await supabase
       .from('prestamos')
-      .select('*, cliente:clientes(nombre_completo)')
+      .select('*, cliente:clientes(nombre_completo, documento_identidad)')
       .order('creado_en', { ascending: false });
 
     if (error) throw new Error(error.message);
